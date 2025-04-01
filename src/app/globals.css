@@ -3,24 +3,59 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@theme {
-  /* 🎨 Color Tokens */
-  --color-primary: #d32f2f;
-  --color-secondary: #388e3c;
-  --color-charcoal: #263238;
-  --color-body: #212121;
-  --color-text-secondary: #757575;
-  --color-bg-light: #f5f5f5;
-  --color-surface: #ffffff;
-  --color-border: #e0e0e0;
-  --color-soft-alert: #ffcdd2;
-  --color-attention: #ff7043;
-  --color-warning: #ffeb3b;
-  --color-deep-navy: #1c2530;
+/* * {
+  border: 1px solid red;
+} */
 
-  /* 🧩 Typography */
+:root {
+  --radius: 0.75rem;
+
+  /* Main color scheme */
+  --primary: hsl(0, 77%, 50%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(122, 41%, 39%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --accent: hsl(16, 100%, 63%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+
+  /* Background and text */
+  --background: hsl(0, 0%, 96%);
+  --foreground: hsl(0, 0%, 13%);
+
+  /* Component colors */
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(0, 0%, 13%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(0, 0%, 13%);
+  --muted: hsl(0, 0%, 88%);
+  --muted-foreground: hsl(0, 0%, 46%);
+
+  /* UI elements */
+  --border: hsl(0, 0%, 88%);
+  --input: hsl(0, 0%, 88%);
+  --ring: hsl(0, 77%, 50%);
+
+  /* Chart colors */
+  --chart-1: hsl(16, 100%, 63%);
+  --chart-2: hsl(122, 41%, 39%);
+  --chart-3: hsl(4, 100%, 90%);
+  --chart-4: hsl(60, 100%, 61%);
+  --chart-5: hsl(210, 25%, 15%);
+
+  /* Sidebar specific */
+  --sidebar: hsl(200, 18%, 18%);
+  --sidebar-foreground: hsl(0, 0%, 100%);
+  --sidebar-primary: hsl(0, 0%, 100%);
+  --sidebar-primary-foreground: hsl(200, 18%, 18%);
+  --sidebar-accent: hsl(200, 18%, 25%);
+  --sidebar-accent-foreground: hsl(0, 0%, 100%);
+  --sidebar-border: hsl(200, 18%, 25%);
+  --sidebar-ring: hsl(0, 77%, 50%);
+
+  /* Typography */
   --font-inter: "Inter", sans-serif;
-
   --text-h1: 32px;
   --text-h2: 24px;
   --text-h3: 20px;
@@ -34,9 +69,46 @@
   --weight-medium: 500;
   --weight-regular: 400;
 
-  /* 🧱 Misc */
+  /* Sizing and spacing */
   --radius-card: 12px;
   --padding-card: 24px;
+}
+
+/* Derived tokens from root values - for backward compatibility */
+@theme {
+  /* 🎨 Color Tokens */
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-charcoal: var(--sidebar);
+  --color-body: var(--foreground);
+  --color-text-secondary: var(--muted-foreground);
+  --color-bg-light: var(--background);
+  --color-surface: var(--card);
+  --color-border: var(--border);
+  --color-soft-alert: hsl(4, 100%, 90%);
+  --color-attention: var(--accent);
+  --color-warning: hsl(60, 100%, 61%);
+  --color-deep-navy: hsl(210, 25%, 15%);
+
+  /* 🧩 Typography */
+  --font-inter: var(--font-inter);
+
+  --text-h1: var(--text-h1);
+  --text-h2: var(--text-h2);
+  --text-h3: var(--text-h3);
+  --text-body-large: var(--text-body-large);
+  --text-body: var(--text-body);
+  --text-caption: var(--text-caption);
+  --text-button: var(--text-button);
+
+  --weight-bold: var(--weight-bold);
+  --weight-semibold: var(--weight-semibold);
+  --weight-medium: var(--weight-medium);
+  --weight-regular: var(--weight-regular);
+
+  /* 🧱 Misc */
+  --radius-card: var(--radius-card);
+  --padding-card: var(--padding-card);
 }
 
 body {
@@ -44,92 +116,49 @@ body {
   font-family: var(--font-inter);
 }
 
-:root {
-  --radius: 12px;
-
-  --card: #ffffff;
-  --card-foreground: #212121;
-
-  --popover: #ffffff;
-  --popover-foreground: #212121;
-
-  --primary: #d32f2f;
-  --primary-foreground: #ffffff;
-
-  --secondary: #388e3c;
-  --secondary-foreground: #ffffff;
-
-  --muted: #f5f5f5;
-  --muted-foreground: #757575;
-
-  --accent: #ff7043;
-  --accent-foreground: #ffffff;
-
-  --destructive: #ffeb3b;
-  --border: #e0e0e0;
-  --input: #e0e0e0;
-  --ring: #d32f2f;
-
-  --chart-1: #ff7043;
-  --chart-2: #388e3c;
-  --chart-3: #ffcdd2;
-  --chart-4: #ffeb3b;
-  --chart-5: #1c2530;
-
-  --sidebar: #263238;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #d32f2f;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #ffcdd2;
-  --sidebar-accent-foreground: #212121;
-  --sidebar-border: #e0e0e0;
-  --sidebar-ring: #d32f2f;
-
-  --background: #f5f5f5;
-  --foreground: #212121;
-}
-
 .dark {
-  --background: #212121;
-  --foreground: #ffffff;
+  --background: hsl(0, 0%, 13%);
+  --foreground: hsl(0, 0%, 100%);
 
-  --card: #263238;
-  --card-foreground: #ffffff;
+  --card: hsl(200, 26%, 19%);
+  --card-foreground: hsl(0, 0%, 100%);
 
-  --popover: #263238;
-  --popover-foreground: #ffffff;
+  --popover: hsl(200, 26%, 19%);
+  --popover-foreground: hsl(0, 0%, 100%);
 
-  --primary: #d32f2f;
-  --primary-foreground: #ffffff;
+  --primary: hsl(0, 64%, 51%);
+  --primary-foreground: hsl(0, 0%, 100%);
 
-  --secondary: #388e3c;
-  --secondary-foreground: #ffffff;
+  --secondary: hsl(120, 44%, 39%);
+  --secondary-foreground: hsl(0, 0%, 100%);
 
-  --muted: #1c2530;
-  --muted-foreground: #e0e0e0;
+  --muted: hsl(210, 25%, 15%);
+  --muted-foreground: hsl(0, 0%, 88%);
 
-  --accent: #ff7043;
-  --accent-foreground: #ffffff;
+  --accent: hsl(15, 100%, 63%);
+  --accent-foreground: hsl(0, 0%, 100%);
 
-  --destructive: #ffeb3b;
-  --border: #e0e0e0;
-  --input: #e0e0e0;
-  --ring: #ffcdd2;
+  --destructive: hsl(60, 100%, 61%);
+  --destructive-foreground: hsl(0, 0%, 13%);
 
-  --chart-1: #ff7043;
-  --chart-2: #388e3c;
-  --chart-3: #ffcdd2;
-  --chart-4: #ffeb3b;
-  --chart-5: #1c2530;
+  --border: hsl(0, 0%, 40%);
+  --input: hsl(0, 0%, 40%);
+  --ring: hsl(4, 100%, 90%);
 
-  --sidebar: #263238;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #d32f2f;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #ffcdd2;
-  --sidebar-accent-foreground: #212121;
-  --sidebar-border: #e0e0e0;
-  --sidebar-ring: #d32f2f;
+  --chart-1: hsl(15, 100%, 63%);
+  --chart-2: hsl(120, 44%, 39%);
+  --chart-3: hsl(4, 100%, 90%);
+  --chart-4: hsl(60, 100%, 61%);
+  --chart-5: hsl(210, 25%, 15%);
+
+  --sidebar: hsl(200, 26%, 19%);
+  --sidebar-foreground: hsl(0, 0%, 100%);
+  --sidebar-primary: hsl(0, 64%, 51%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(4, 100%, 90%);
+  --sidebar-accent-foreground: hsl(0, 0%, 13%);
+  --sidebar-border: hsl(200, 22%, 28%);
+  --sidebar-ring: hsl(0, 64%, 51%);
 }
 
 @theme inline {
