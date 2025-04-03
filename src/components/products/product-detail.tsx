@@ -10,7 +10,7 @@ import { Badge } from "../ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import ForecastTable from "../forecast/forecast-table";
 import { SummaryCard } from "../forecast/summary-card";
-import { Tabs, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/tabs";
 
 const ProductDetail = ({ productId, warehouseId }: ProductDetailProps) => {
     const { fetchProductById, selectedProducts, loadingProducts, error } = useProductsStore();
@@ -29,7 +29,11 @@ const ProductDetail = ({ productId, warehouseId }: ProductDetailProps) => {
         }
     }, [productId, warehouseId, fetchProductById]);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return (
+        <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+    </div>
+    );
     if (error) return <p>Error: {error}</p>;
 
     const isLowStock = (product?.stock_level ?? 0) < (product?.reorder_threshold ?? 0);
@@ -97,22 +101,16 @@ const ProductDetail = ({ productId, warehouseId }: ProductDetailProps) => {
                 </Card>
                 <div className="md:col-span-2 space-y-6">
                     <Tabs defaultValue="forecast" className="w-full">
-                        <TabsList className="grid w-full grid-cols-2 gap-x-4 bg-gray-100 rounded-md p-1">
-                            <TabsTrigger
-                                value="forecast"
-                                className="py-2 px-4 text-sm font-medium text-gray-700 bg-charcoal/10 hover:charcoal/40 cursor-pointer rounded-md hover:bg-gray-200 "
-                            >
-                                Forecast
-                            </TabsTrigger>
-                            <TabsTrigger
-                                value="summary"
-                                className="py-2 px-4 text-sm font-medium text-gray-700 bg-charcoal/10 hover:charcoal/40 cursor-pointer rounded-md hover:bg-gray-200 "
-                            >
-                                AI Summary
-                            </TabsTrigger>
+                        <TabsList className="grid w-full grid-cols-2">
+                            <TabsTrigger value="forecast">Forecast</TabsTrigger>
+                            <TabsTrigger value="summary">AI Summary</TabsTrigger>
                         </TabsList>
-                        <ForecastTable productId={productId} productName={product?.product_name} />
-                        <SummaryCard productId={productId} productName={product?.product_name} />
+                        <TabsContent value="forecast">
+                            <ForecastTable productId={productId} productName={product?.product_name} />
+                        </TabsContent>
+                        <TabsContent value="summary">
+                            <SummaryCard productId={productId} productName={product?.product_name} />
+                        </TabsContent>
                     </Tabs>
                 </div>
             </div>
