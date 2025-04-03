@@ -14,20 +14,18 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { ForecastDataPoint } from "@/types";
+import { formatDate } from "@/lib/utils";
+import { useMemo } from "react";
 
 interface ForecastChartProps {
     data: ForecastDataPoint[];
 }
 
 export function ForecastChart({ data }: ForecastChartProps) {
-    const chartData = data.map((point) => ({
+    const chartData = useMemo(() => data.map((point) => ({
         ...point,
-        dateFormatted: new Date(point.date).toLocaleDateString("en-US", {
-            weekday: "short",
-            month: "short",
-            day: "numeric",
-        }),
-    }));
+        dateFormatted: formatDate(point.date),
+    })), [data]);
 
     const chartConfig = {
         predicted_value: {
@@ -46,8 +44,12 @@ export function ForecastChart({ data }: ForecastChartProps) {
 
     return (
         <ChartContainer config={chartConfig} className="min-h-[300px] w-full">
-            <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
+            <ResponsiveContainer width="100%" height={300}>
+                <AreaChart 
+                    data={chartData} 
+                    margin={{ top: 10, right: 10, bottom: 0, left: 0 }}
+                    aria-label="Forecast data chart showing predicted values with upper and lower bounds"
+                >
                     <defs>
                         <linearGradient id="colorPredicted" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="hsl(var(--chart-1))" stopOpacity={0.8} />
@@ -70,7 +72,12 @@ export function ForecastChart({ data }: ForecastChartProps) {
                         tickLine={false}
                         axisLine={false}
                     />
-                    <YAxis tick={{ fontSize: 12 }} width={40} tickLine={false} />
+                    <YAxis 
+                        tick={{ fontSize: 12 }} 
+                        width={40} 
+                        tickLine={false}
+                        domain={['auto', 'auto']}
+                    />
                     <Tooltip content={<ChartTooltipContent />} />
                     <Area
                         type="monotone"
@@ -78,6 +85,7 @@ export function ForecastChart({ data }: ForecastChartProps) {
                         stroke="none"
                         fill="url(#colorUpper)"
                         fillOpacity={1}
+                        name="Upper Bound"
                     />
                     <Area
                         type="monotone"
@@ -86,6 +94,7 @@ export function ForecastChart({ data }: ForecastChartProps) {
                         fill="url(#colorPredicted)"
                         strokeWidth={2}
                         fillOpacity={1}
+                        name="Predicted"
                     />
                     <Area
                         type="monotone"
@@ -93,6 +102,7 @@ export function ForecastChart({ data }: ForecastChartProps) {
                         stroke="none"
                         fill="url(#colorLower)"
                         fillOpacity={1}
+                        name="Lower Bound"
                     />
                 </AreaChart>
             </ResponsiveContainer>
