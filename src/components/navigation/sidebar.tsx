@@ -15,7 +15,7 @@ const SidebarComponent = () => {
     const pathname = usePathname()
 
     const isActive = (path: string) => {
-        if (path === "/" && pathname === "/") return true
+        if (path === "/" && pathname === "/dashboard/products") return true
         if (path !== "/" && pathname.startsWith(path)) return true
         return false
     }
@@ -28,7 +28,7 @@ const SidebarComponent = () => {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton asChild isActive={isActive("/")}>
-                            <Link href="/">
+                            <Link href="/dashboard/products">
                                 <Home />
                                 <span>Products</span>
                             </Link>

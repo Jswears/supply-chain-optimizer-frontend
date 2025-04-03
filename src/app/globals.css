@@ -38,11 +38,11 @@
   --ring: hsl(0, 77%, 50%);
 
   /* Chart colors */
-  --chart-1: hsl(16, 100%, 63%);
-  --chart-2: hsl(122, 41%, 39%);
-  --chart-3: hsl(4, 100%, 90%);
-  --chart-4: hsl(60, 100%, 61%);
-  --chart-5: hsl(210, 25%, 15%);
+  --chart-1: var(--accent);
+  --chart-2: var(--secondary);
+  --chart-3: hsl(0, 84%, 60%); /* Matches --destructive */
+  --chart-4: hsl(60, 100%, 61%); /* Matches --warning */
+  --chart-5: var(--foreground);
 
   /* Sidebar specific */
   --sidebar: hsl(200, 18%, 18%);
@@ -145,11 +145,11 @@ body {
   --input: hsl(0, 0%, 40%);
   --ring: hsl(4, 100%, 90%);
 
-  --chart-1: hsl(15, 100%, 63%);
-  --chart-2: hsl(120, 44%, 39%);
-  --chart-3: hsl(4, 100%, 90%);
-  --chart-4: hsl(60, 100%, 61%);
-  --chart-5: hsl(210, 25%, 15%);
+  --chart-1: var(--accent);
+  --chart-2: var(--secondary);
+  --chart-3: hsl(0, 84%, 60%); /* Matches --destructive */
+  --chart-4: hsl(60, 100%, 61%); /* Matches --warning */
+  --chart-5: var(--foreground);
 
   --sidebar: hsl(200, 26%, 19%);
   --sidebar-foreground: hsl(0, 0%, 100%);
