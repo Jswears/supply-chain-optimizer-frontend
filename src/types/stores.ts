@@ -6,6 +6,7 @@ export interface ProductsStoreState {
   error: string | null;
   selectedProducts: Record<string, Product>;
   loadingProducts: Record<string, boolean>;
+  isLoading?: boolean;
   fetchProducts: () => Promise<void>;
   fetchProductById: (
     productId: string,
