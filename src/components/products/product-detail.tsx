@@ -31,8 +31,8 @@ const ProductDetail = ({ productId, warehouseId }: ProductDetailProps) => {
 
     if (loading) return (
         <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-    </div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        </div>
     );
     if (error) return <p>Error: {error}</p>;
 
@@ -102,8 +102,8 @@ const ProductDetail = ({ productId, warehouseId }: ProductDetailProps) => {
                 <div className="md:col-span-2 space-y-6">
                     <Tabs defaultValue="forecast" className="w-full">
                         <TabsList className="grid w-full grid-cols-2">
-                            <TabsTrigger value="forecast">Forecast</TabsTrigger>
-                            <TabsTrigger value="summary">AI Summary</TabsTrigger>
+                            <TabsTrigger value="forecast" className="cursor-pointer">Forecast</TabsTrigger>
+                            <TabsTrigger value="summary" className="cursor-pointer">AI Summary</TabsTrigger>
                         </TabsList>
                         <TabsContent value="forecast">
                             <ForecastTable productId={productId} productName={product?.product_name} />
