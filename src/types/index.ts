@@ -49,7 +49,9 @@ export interface ForecastDataPointResponse {
 
 export interface ForecastSummary {
   product_id: string;
-  summary: string;
+  text: string;
+  trend: "low" | "stable" | "up";
+  alert: boolean;
 }
 
 export interface ForecastSummaryResponse {

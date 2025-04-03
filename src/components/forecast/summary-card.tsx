@@ -35,11 +35,11 @@ export function SummaryCard({ productId, productName }: SummaryCardProps) {
         <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle>AI-Generated Insights</CardTitle>
-                <Button 
-                    onClick={onRefresh} 
-                    variant="outline" 
-                    size="sm" 
-                    disabled={isLoading || !productName} 
+                <Button
+                    onClick={onRefresh}
+                    variant="outline"
+                    size="sm"
+                    disabled={isLoading || !productName}
                     className="h-8 px-2 text-xs cursor-pointer"
                 >
                     <RefreshCw className={`h-3.5 w-3.5 mr-1 ${isLoading ? "animate-spin" : ""}`} />
@@ -65,7 +65,7 @@ export function SummaryCard({ productId, productName }: SummaryCardProps) {
 
                 {data && !isLoading && !error && (
                     <div className="relative py-4 px-5 border-l-4 border-primary bg-primary/5 rounded-r-md">
-                        <blockquote className="text-base italic">{data.summary}</blockquote>
+                        <blockquote className="text-base italic">{data.text}</blockquote>
                     </div>
                 )}
             </CardContent>
