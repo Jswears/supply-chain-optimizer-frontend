@@ -15,17 +15,28 @@ export const useProductsStore = create<ProductsStoreState>((set, get) => ({
   fetchProducts: async () => {
     set({ error: null });
     try {
+      set((state) => ({ ...state, isLoading: true }));
       const warehouseId = "warehouse_main_01";
       const response = await api.get<ProductsResponse>(
         `/warehouses/${warehouseId}/products`
       );
+
+      if (!response.success) {
+        throw new Error(response.data.message || "Failed to fetch products");
+      }
+
       set({
         products: response.data.data,
         totalProductsCount: response.data.data.length,
+        isLoading: false,
       });
     } catch (error) {
+      console.error("Error fetching products:", error);
       set({
-        error: (error as Error).message,
+        error:
+          (error as Error).message ||
+          "An error occurred while fetching products",
+        isLoading: false,
       });
     }
   },
@@ -46,11 +57,19 @@ export const useProductsStore = create<ProductsStoreState>((set, get) => ({
     // Set loading for this specific product
     set((state) => ({
       loadingProducts: { ...state.loadingProducts, [key]: true },
+      error: null, // Reset error when starting a new fetch
     }));
 
     try {
       const url = `/products/${productId}?warehouseId=${warehouseId}`;
       const response = await api.get<SingleProductResponse>(url);
+
+      if (!response.success) {
+        throw new Error(
+          response.data.message || "Failed to fetch product details"
+        );
+      }
+
       const product = response.data.data;
 
       set((state) => ({
@@ -60,11 +79,16 @@ export const useProductsStore = create<ProductsStoreState>((set, get) => ({
 
       return product;
     } catch (error) {
+      const errorMessage =
+        (error as Error).message ||
+        "An error occurred while fetching product details";
+      console.error("Error fetching product:", error);
+
       set((state) => ({
         loadingProducts: { ...state.loadingProducts, [key]: false },
-        error: (error as Error).message,
+        error: errorMessage,
       }));
-      console.error("Error fetching product:", error);
+
       return null;
     }
   },

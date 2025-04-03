@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { ForecastSummaryStoreState } from "@/types/stores";
 import { api } from "@/lib/api";
-import { ForecastSummary, ForecastSummaryResponse } from "@/types";
+import { ForecastSummaryResponse } from "@/types";
 
 export const useForecastSummaryStore = create<ForecastSummaryStoreState>(
   (set, get) => ({
@@ -21,14 +21,13 @@ export const useForecastSummaryStore = create<ForecastSummaryStoreState>(
       }));
 
       try {
-        console.log("FETCHING SUMMARY FOR PRODUCT ID:", productId);
         const response = await api.post<ForecastSummaryResponse>(
           `/predict/${productId}/summary`,
           { product_name: productName }
         );
 
         if (!response.success) {
-          throw new Error(response.data.message);
+          throw new Error(response.data.message || "Failed to fetch summary");
         }
 
         const data = response.data.data;
@@ -46,10 +45,14 @@ export const useForecastSummaryStore = create<ForecastSummaryStoreState>(
 
         return data;
       } catch (error) {
+        const errorMessage =
+          (error as Error).message ||
+          "An error occurred while fetching summary";
+
         set((state) => ({
           summaryErrors: {
             ...state.summaryErrors,
-            [productId]: (error as Error).message,
+            [productId]: errorMessage,
           },
           loadingSummaries: {
             ...state.loadingSummaries,
@@ -58,7 +61,7 @@ export const useForecastSummaryStore = create<ForecastSummaryStoreState>(
         }));
 
         console.error("Error fetching summary:", error);
-        return null as ForecastSummary | null;
+        return null;
       }
     },
   })

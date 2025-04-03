@@ -23,6 +23,11 @@ export const useForecastStore = create<ForecastStoreState>((set, get) => ({
       const response = await api.get<ForecastDataPointResponse>(
         `/predict/${productId}`
       );
+
+      if (!response.success) {
+        throw new Error(response.data.message || "Failed to fetch forecast");
+      }
+
       const data = response.data;
 
       set((state) => ({
@@ -38,10 +43,13 @@ export const useForecastStore = create<ForecastStoreState>((set, get) => ({
 
       return data.data;
     } catch (error) {
+      const errorMessage =
+        (error as Error).message || "An error occurred while fetching forecast";
+
       set((state) => ({
         forecastErrors: {
           ...state.forecastErrors,
-          [productId]: (error as Error).message,
+          [productId]: errorMessage,
         },
         loadingForecasts: {
           ...state.loadingForecasts,
