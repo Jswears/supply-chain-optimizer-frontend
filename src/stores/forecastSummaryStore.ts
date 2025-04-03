@@ -35,7 +35,12 @@ export const useForecastSummaryStore = create<ForecastSummaryStoreState>(
         set((state) => ({
           summariesByProductId: {
             ...state.summariesByProductId,
-            [productId]: data,
+            [productId]: {
+              ...data,
+              text: data.text,
+              trend: data.trend,
+              alert: data.alert,
+            },
           },
           loadingSummaries: {
             ...state.loadingSummaries,

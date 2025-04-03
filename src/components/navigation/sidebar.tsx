@@ -36,7 +36,7 @@ const SidebarComponent = () => {
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                         <SidebarMenuButton asChild isActive={isActive("/forecasts")}>
-                            <Link href="/forecasts">
+                            <Link href="/dashboard/forecasts">
                                 <BarChart3 />
                                 <span>Forecasts</span>
                             </Link>
