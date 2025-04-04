@@ -9,7 +9,7 @@ import {
     SidebarMenuButton,
 } from "@/components/ui/sidebar"
 import Link from "next/link";
-import { Home, BarChart3, PieChart, Settings, User } from "lucide-react"
+import { BarChart3, PieChart, Settings, User, BoxIcon, ShoppingBag } from "lucide-react"
 import { usePathname } from "next/navigation"
 const SidebarComponent = () => {
     const pathname = usePathname()
@@ -29,8 +29,16 @@ const SidebarComponent = () => {
                     <SidebarMenuItem>
                         <SidebarMenuButton asChild isActive={isActive("/")}>
                             <Link href="/dashboard/products">
-                                <Home />
+                                <BoxIcon/>
                                 <span>Products</span>
+                            </Link>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton asChild isActive={isActive("/")}>
+                            <Link href="/dashboard/orders">
+                                <ShoppingBag/>
+                                <span>Orders</span>
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
