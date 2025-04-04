@@ -33,7 +33,7 @@ export default function LoginPage() {
 
             if (email === "admin@example.com" && password === "admin") {
                 // Use router.push for client-side navigation
-                router.push("/dashboard")
+                router.push("/dashboard/products")
             } else {
                 setError("Invalid email or password")
             }
