@@ -58,7 +58,7 @@ const SidebarComponent = () => {
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                        <SidebarMenuButton asChild isActive={isActive("/")}>
+                        <SidebarMenuButton asChild isActive={isActive("/dashboard/orders")}>
                             <Link href="/dashboard/orders">
                                 <ShoppingBag />
                                 <span>Orders</span>
