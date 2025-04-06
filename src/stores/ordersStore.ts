@@ -194,8 +194,7 @@ export const useOrdersStore = create<OrdersStoreState>((set, get) => ({
 
       // Remove the order from both the list and selected orders
       set((state) => {
-        const { [orderId]: removedOrder, ...remainingSelectedOrders } =
-          state.selectedOrders;
+        const { ...remainingSelectedOrders } = state.selectedOrders;
 
         return {
           orders: state.orders.filter((order) => order.order_id !== orderId),

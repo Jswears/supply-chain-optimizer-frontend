@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
 import { useAuthStore } from "@/stores/authStore";
 
-export default function ForgotPasswordPage() {
+// Component that uses search params
+function ForgotPasswordForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const paramEmail = searchParams.get("email") || "";
@@ -25,7 +26,6 @@ export default function ForgotPasswordPage() {
     } = useAuthStore();
 
     const [currentEmail, setCurrentEmail] = useState(paramEmail);
-
     const [currentStep, setCurrentStep] = useState(1);
     const [code, setCode] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -62,6 +62,108 @@ export default function ForgotPasswordPage() {
     };
 
     return (
+        <>
+            {currentStep === 1 ? (
+                <form onSubmit={handleRequestCode} className="space-y-4">
+                    {(error || localError) && (
+                        <Alert variant="destructive" className="bg-soft-alert text-soft-alert-foreground border-primary">
+                            <AlertCircle className="h-4 w-4" />
+                            <AlertDescription>{localError || error}</AlertDescription>
+                        </Alert>
+                    )}
+
+                    <div className="space-y-2">
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                            id="email"
+                            type="email"
+                            placeholder="your.email@company.com"
+                            value={currentEmail}
+                            onChange={(e) => setCurrentEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <Button type="submit" className="w-full button-text" disabled={isLoading}>
+                        {isLoading ? "Sending code..." : "Send Reset Code"}
+                    </Button>
+                </form>
+            ) : (
+                <form onSubmit={handleResetPassword} className="space-y-4">
+                    {(error || localError) && (
+                        <Alert variant="destructive" className="bg-soft-alert text-soft-alert-foreground border-primary">
+                            <AlertCircle className="h-4 w-4" />
+                            <AlertDescription>{localError || error}</AlertDescription>
+                        </Alert>
+                    )}
+
+                    <div className="space-y-2">
+                        <Label htmlFor="code">Verification Code</Label>
+                        <Input
+                            id="code"
+                            placeholder="Enter code from email"
+                            value={code}
+                            onChange={(e) => setCode(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="new-password">New Password</Label>
+                        <Input
+                            id="new-password"
+                            type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="confirm-password">Confirm New Password</Label>
+                        <Input
+                            id="confirm-password"
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <Button type="submit" className="w-full button-text" disabled={isLoading}>
+                        {isLoading ? "Resetting password..." : "Reset Password"}
+                    </Button>
+
+                    <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full mt-2"
+                        onClick={() => setCurrentStep(1)}
+                    >
+                        Back to Request Code
+                    </Button>
+                </form>
+            )}
+        </>
+    );
+}
+
+// Fallback component while the main content is loading
+function ForgotPasswordFormFallback() {
+    return (
+        <div className="space-y-4">
+            <div className="space-y-2">
+                <div className="h-5 w-10 bg-gray-200 rounded animate-pulse"></div>
+                <div className="h-10 w-full bg-gray-200 rounded animate-pulse"></div>
+            </div>
+            <div className="h-10 w-full bg-gray-200 rounded animate-pulse"></div>
+        </div>
+    );
+}
+
+export default function ForgotPasswordPage() {
+    // Main page component - now without useSearchParams()
+    return (
         <div className="min-h-screen w-full flex items-center justify-center bg-background p-4">
             <div className="w-full max-w-md">
                 <div className="text-center mb-8">
@@ -71,97 +173,15 @@ export default function ForgotPasswordPage() {
 
                 <Card className="w-full">
                     <CardHeader>
-                        <CardTitle className="text-h2">
-                            {currentStep === 1 ? "Forgot Password" : "Reset Password"}
-                        </CardTitle>
+                        <CardTitle className="text-h2">Forgot Password</CardTitle>
                         <CardDescription>
-                            {currentStep === 1
-                                ? "Enter your email to receive a password reset code"
-                                : "Enter the code from your email and create a new password"}
+                            Enter your email to receive a password reset code
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        {currentStep === 1 ? (
-                            <form onSubmit={handleRequestCode} className="space-y-4">
-                                {(error || localError) && (
-                                    <Alert variant="destructive" className="bg-soft-alert text-soft-alert-foreground border-primary">
-                                        <AlertCircle className="h-4 w-4" />
-                                        <AlertDescription>{localError || error}</AlertDescription>
-                                    </Alert>
-                                )}
-
-                                <div className="space-y-2">
-                                    <Label htmlFor="email">Email</Label>
-                                    <Input
-                                        id="email"
-                                        type="email"
-                                        placeholder="your.email@company.com"
-                                        value={currentEmail}
-                                        onChange={(e) => setCurrentEmail(e.target.value)}
-                                        required
-                                    />
-                                </div>
-
-                                <Button type="submit" className="w-full button-text" disabled={isLoading}>
-                                    {isLoading ? "Sending code..." : "Send Reset Code"}
-                                </Button>
-                            </form>
-                        ) : (
-                            <form onSubmit={handleResetPassword} className="space-y-4">
-                                {(error || localError) && (
-                                    <Alert variant="destructive" className="bg-soft-alert text-soft-alert-foreground border-primary">
-                                        <AlertCircle className="h-4 w-4" />
-                                        <AlertDescription>{localError || error}</AlertDescription>
-                                    </Alert>
-                                )}
-
-                                <div className="space-y-2">
-                                    <Label htmlFor="code">Verification Code</Label>
-                                    <Input
-                                        id="code"
-                                        placeholder="Enter code from email"
-                                        value={code}
-                                        onChange={(e) => setCode(e.target.value)}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <Label htmlFor="new-password">New Password</Label>
-                                    <Input
-                                        id="new-password"
-                                        type="password"
-                                        value={newPassword}
-                                        onChange={(e) => setNewPassword(e.target.value)}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <Label htmlFor="confirm-password">Confirm New Password</Label>
-                                    <Input
-                                        id="confirm-password"
-                                        type="password"
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
-                                        required
-                                    />
-                                </div>
-
-                                <Button type="submit" className="w-full button-text" disabled={isLoading}>
-                                    {isLoading ? "Resetting password..." : "Reset Password"}
-                                </Button>
-
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    className="w-full mt-2"
-                                    onClick={() => setCurrentStep(1)}
-                                >
-                                    Back to Request Code
-                                </Button>
-                            </form>
-                        )}
+                        <Suspense fallback={<ForgotPasswordFormFallback />}>
+                            <ForgotPasswordForm />
+                        </Suspense>
                     </CardContent>
                     <CardFooter className="flex justify-center">
                         <p className="text-sm text-muted-foreground">
