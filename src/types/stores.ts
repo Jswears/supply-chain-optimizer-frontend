@@ -12,6 +12,11 @@ export interface ProductsStoreState {
     productId: string,
     warehouseId: string
   ) => Promise<Product | null>;
+  updateProductStock: (
+    productId: string,
+    warehouseId: string,
+    quantityChange: number
+  ) => Promise<Product | null>;
 }
 
 export interface ForecastStoreState {

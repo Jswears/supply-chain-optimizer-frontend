@@ -17,4 +17,12 @@ export const api = {
     const response = await axiosClient.post<T>(url, data);
     return response.data;
   },
+  put: async <T = unknown>(url: string, data?: object): Promise<T> => {
+    const response = await axiosClient.put<T>(url, data);
+    return response.data;
+  },
+  delete: async <T = unknown>(url: string): Promise<T> => {
+    const response = await axiosClient.delete<T>(url);
+    return response.data;
+  },
 };

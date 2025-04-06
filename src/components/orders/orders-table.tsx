@@ -40,6 +40,7 @@ const OrderTable = ({ orders }: OrderTableProps) => {
                     <TableRow>
                         <TableHead>Order ID</TableHead>
                         <TableHead>Product Name</TableHead>
+                        <TableHead>Supplier</TableHead>
                         <TableHead>Quantity</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead>Created At</TableHead>
@@ -56,11 +57,12 @@ const OrderTable = ({ orders }: OrderTableProps) => {
                         orders.map((order) => (
                             <TableRow key={order.order_id}>
                                 <TableCell className="font-medium">
-                                    <Link href={`/orders/${order.order_id}`} className="text-primary hover:underline">
+                                    <Link href={`/dashboard/orders/${order.order_id}`} className="text-primary hover:underline">
                                         {order.order_id.substring(0, 8)}...
                                     </Link>
                                 </TableCell>
-                                <TableCell>{order.product_id}</TableCell>
+                                <TableCell>{order.product_name}</TableCell>
+                                <TableCell>{order.supplier}</TableCell>
                                 <TableCell>{order.quantity}</TableCell>
                                 <TableCell>
                                     <Badge variant={getStatusBadgeVariant(order.status)}>{order.status}</Badge>
