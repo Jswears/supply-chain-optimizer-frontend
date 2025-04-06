@@ -1,6 +1,6 @@
 import { api } from "../lib/api";
-import { Product, ProductsStoreState } from "../types/stores";
-import { ProductsResponse, SingleProductResponse } from "../types";
+import { ProductsStoreState } from "../types/stores";
+import { Product, ProductsResponse, SingleProductResponse } from "../types";
 import { create } from "zustand";
 
 type ProductKey = `${string}_${string}`; // productId_warehouseId
@@ -117,18 +117,27 @@ export const useProductsStore = create<ProductsStoreState>((set, get) => ({
         throw new Error("Failed to find product");
       }
 
-      // Update the stock level in our local state
+      // Calculate the new stock level
+      const newStockLevel = currentProduct.stock_level + quantityChange;
+
+      // Update the backend with the new stock level using the correct endpoint format
+      // with query parameter for warehouseId
+      const response = await api.put<SingleProductResponse>(
+        `/products/${productId}?warehouseId=${warehouseId}`,
+        { stock_level: newStockLevel }
+      );
+
+      if (!response.success) {
+        throw new Error(
+          response.data?.message || "Failed to update product stock in backend"
+        );
+      }
+
+      // If backend update was successful, create the updated product object
       const updatedProduct: Product = {
         ...currentProduct,
-        stock_level: currentProduct.stock_level + quantityChange,
+        stock_level: newStockLevel,
       };
-
-      // In a real app, we would also call the API to update the stock level in the backend
-      // For this implementation, we'll just update our local state
-      // const response = await api.put(`/products/${productId}`, {
-      //   stock_level: updatedProduct.stock_level,
-      //   warehouseId
-      // });
 
       // Update both the selected product and the product in the list if it exists
       set((state) => {
