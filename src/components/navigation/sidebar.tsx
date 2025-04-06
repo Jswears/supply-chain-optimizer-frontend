@@ -58,7 +58,7 @@ const SidebarComponent = () => {
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                        <SidebarMenuButton asChild isActive={isActive("/")}>
+                        <SidebarMenuButton asChild isActive={isActive("/dashboard/orders")}>
                             <Link href="/dashboard/orders">
                                 <ShoppingBag />
                                 <span>Orders</span>
@@ -94,9 +94,11 @@ const SidebarComponent = () => {
             <SidebarFooter>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton className="cursor-pointer">
-                            <User />
-                            <span>Profile</span>
+                        <SidebarMenuButton asChild isActive={isActive("/dashboard/profile")}>
+                            <Link href="/dashboard/profile">
+                                <User />
+                                <span>Profile</span>
+                            </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
