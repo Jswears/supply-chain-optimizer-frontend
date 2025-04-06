@@ -2,11 +2,11 @@ import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
 import OrdersView from "@/components/orders/orders-view";
 
 const OrdersPage = () => {
-    return ( 
+    return (
         <DashboardLayout>
-<OrdersView/>
+            <OrdersView />
         </DashboardLayout>
-     );
+    );
 }
- 
+
 export default OrdersPage;
