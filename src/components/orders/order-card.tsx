@@ -1,6 +1,7 @@
 import type { Order } from "@/types/order"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
 
 interface OrderCardProps {
     order: Order
@@ -36,8 +37,10 @@ const OrderCard = ({ order }: OrderCardProps) => {
             <CardContent className="p-6">
                 <div className="flex justify-between items-start">
                     <div>
-                        <p className="text-lg font-semibold text-primary hover:underline">{order.order_id.substring(0, 8)}...</p>
-                        <p className="text-sm text-muted-foreground mt-1">{order.product_id}</p>
+                        <Link href={`/dashboard/orders/${order.order_id}`}>
+                            <p className="text-lg font-semibold">{order.order_id.substring(0, 8)}...</p>
+                        </Link>
+                        <p className="text-sm text-muted-foreground mt-1">{order.product_name || "N/A"}</p>
                     </div>
                     <Badge variant={getStatusBadgeVariant(order.status)}>{order.status}</Badge>
                 </div>
