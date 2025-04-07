@@ -12,7 +12,7 @@ import { updateUserAttributes } from "aws-amplify/auth";
 import { toast } from "sonner";
 
 export default function ProfileView() {
-    const { user, isLoading, error, clearError, fetchCurrentUser } = useAuthStore();
+    const { user, isLoading, error, clearError, fetchCurrentUser, } = useAuthStore();
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");

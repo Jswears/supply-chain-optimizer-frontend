@@ -21,6 +21,7 @@ interface User {
   email: string;
   isAdmin: boolean;
   attributes: Record<string, string>;
+  idToken: string;
 }
 
 interface AuthState {
@@ -460,6 +461,15 @@ export const useAuthStore = create<AuthState>()(
             ] as string[]) || [];
           const isAdmin = groups.includes("Admin") || groups.includes("ADMINS");
 
+          // Retrieve idToken - use the JWT string value directly
+          const idToken = session.tokens?.idToken?.toString();
+
+          // Log token details to help with debugging
+          console.log(
+            "ID Token retrieved:",
+            idToken ? `${idToken.substring(0, 20)}...` : "No token"
+          );
+
           // Construct user object
           const user: User = {
             username: currentUserData.username,
@@ -474,6 +484,7 @@ export const useAuthStore = create<AuthState>()(
                 ([, value]) => value !== undefined
               )
             ) as Record<string, string>,
+            idToken: idToken || "",
           };
 
           state.setUser(user);
