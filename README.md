@@ -1,12 +1,13 @@
 # ChainOpt AI: Supply Chain Optimizer
 
-![ChainOpt AI Logo](public/file.svg)
+![ChainOpt AI Logo](public/logo.png)
 
 ## Overview
 
 ChainOpt AI is an advanced supply chain optimization system designed specifically for bakeries and food production businesses. This application leverages AI and predictive analytics to optimize inventory management, reduce waste, forecast demand, and streamline order processing.
 
 Built with modern web technologies including Next.js, TypeScript, and AWS Amplify, ChainOpt AI provides a seamless user experience with real-time data processing and visualization.
+The application is designed to be user-friendly, with a focus on providing actionable insights and recommendations to improve supply chain efficiency.
 
 ## Features
 
@@ -129,7 +130,11 @@ yarn build
 
 ## Screenshots
 
-[Include screenshots of key application features here]
+![ChainOpt AI Logo](public/Forecast.png)
+![ChainOpt AI Logo](public/Insight.png)
+![ChainOpt AI Logo](public/Products.png)
+![ChainOpt AI Logo](public/Orders.png)
+![ChainOpt AI Logo](public/OrderDetail.png)
 
 ## Architecture
 
@@ -157,6 +162,6 @@ This project is proprietary and confidential. Unauthorized copying, distribution
 
 For more information, please contact:
 
-- Email: [your.email@example.com](mailto:your.email@example.com)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourusername)
-- Portfolio: [Your Portfolio](https://yourportfolio.com)
+- Email: [joaquinsw.salinas@gmail.com](mailto:joaquinsw.salinas@gmail.com)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/joaquin-ignacio-swears-salinas-9a4947284/)
+- Portfolio: [Portfolio](https://www.joaquinswears.com/)
