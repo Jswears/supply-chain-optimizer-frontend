@@ -10,7 +10,7 @@ import {
     SidebarMenuButton,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { BarChart3, PieChart, Settings, User, BoxIcon, ShoppingBag, LogOut } from "lucide-react";
+import { BarChart3, User, BoxIcon, ShoppingBag, LogOut } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/authStore";
 
@@ -70,22 +70,6 @@ const SidebarComponent = () => {
                             <Link href="/dashboard/forecasts">
                                 <BarChart3 />
                                 <span>Forecasts</span>
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton asChild isActive={isActive("/analytics")}>
-                            <Link href="/analytics">
-                                <PieChart />
-                                <span>Analytics</span>
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton asChild isActive={isActive("/settings")}>
-                            <Link href="/settings">
-                                <Settings />
-                                <span>Settings</span>
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
