@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import {
     Sidebar,
     SidebarContent,
@@ -7,18 +8,40 @@ import {
     SidebarMenu,
     SidebarMenuItem,
     SidebarMenuButton,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 import Link from "next/link";
-import { BarChart3, PieChart, Settings, User, BoxIcon, ShoppingBag } from "lucide-react"
-import { usePathname } from "next/navigation"
+import { BarChart3, User, BoxIcon, ShoppingBag, LogOut } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuthStore } from "@/stores/authStore";
+
 const SidebarComponent = () => {
-    const pathname = usePathname()
+    const pathname = usePathname();
+    const router = useRouter();
+    const { logout, fetchCurrentUser } = useAuthStore();
+
+    useEffect(() => {
+        const checkAuthStatus = async () => {
+            try {
+                await fetchCurrentUser();
+            } catch (error) {
+                console.error("Error checking auth status:", error);
+            }
+        };
+
+        checkAuthStatus();
+    }, [fetchCurrentUser]);
 
     const isActive = (path: string) => {
-        if (path === "/" && pathname === "/dashboard/products") return true
-        if (path !== "/" && pathname.startsWith(path)) return true
-        return false
-    }
+        if (path === "/" && pathname === "/dashboard/products") return true;
+        if (path !== "/" && pathname.startsWith(path)) return true;
+        return false;
+    };
+
+    const handleLogout = async () => {
+        await logout();
+        router.push("/auth/login");
+    };
+
     return (
         <Sidebar>
             <SidebarHeader className="flex items-center justify-center py-6">
@@ -29,15 +52,15 @@ const SidebarComponent = () => {
                     <SidebarMenuItem>
                         <SidebarMenuButton asChild isActive={isActive("/")}>
                             <Link href="/dashboard/products">
-                                <BoxIcon/>
+                                <BoxIcon />
                                 <span>Products</span>
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                        <SidebarMenuButton asChild isActive={isActive("/")}>
+                        <SidebarMenuButton asChild isActive={isActive("/dashboard/orders")}>
                             <Link href="/dashboard/orders">
-                                <ShoppingBag/>
+                                <ShoppingBag />
                                 <span>Orders</span>
                             </Link>
                         </SidebarMenuButton>
@@ -50,36 +73,28 @@ const SidebarComponent = () => {
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton asChild isActive={isActive("/analytics")}>
-                            <Link href="/analytics">
-                                <PieChart />
-                                <span>Analytics</span>
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton asChild isActive={isActive("/settings")}>
-                            <Link href="/settings">
-                                <Settings />
-                                <span>Settings</span>
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarContent>
             <SidebarFooter>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton>
-                            <User />
-                            <span>Profile</span>
+                        <SidebarMenuButton asChild isActive={isActive("/dashboard/profile")}>
+                            <Link href="/dashboard/profile">
+                                <User />
+                                <span>Profile</span>
+                            </Link>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton className="cursor-pointer" onClick={handleLogout}>
+                            <LogOut />
+                            <span>Logout</span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarFooter>
         </Sidebar>
     );
-}
+};
 
 export default SidebarComponent;

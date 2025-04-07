@@ -4,11 +4,12 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { Toaster } from "@/components/ui/sonner"
+import ConfigureAmplify from "@/lib/configureAmplify"
 
 const inter = Inter({ subsets: ["latin"], display: "swap" })
 
 export const metadata: Metadata = {
-  title: "Bakery Inventory Dashboard",
+  title: "ChainOpt AI",
   description: "AI-powered supply chain optimization system for bakeries",
 }
 
@@ -23,7 +24,8 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={`${inter.className} h-full overflow-hidden`}>
-        <SidebarProvider>
+        <ConfigureAmplify />
+        <SidebarProvider className="">
           {children}
           <Toaster />
         </SidebarProvider>
