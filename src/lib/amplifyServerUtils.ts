@@ -1,6 +1,6 @@
 import { createServerRunner, NextServer } from "@aws-amplify/adapter-nextjs";
 import { fetchAuthSession, getCurrentUser } from "aws-amplify/auth/server";
-import outputs from "../../amplify_outputs.json";
+import outputs from "@/amplify_outputs.json";
 
 export const { runWithAmplifyServerContext } = createServerRunner({
   config: outputs,
