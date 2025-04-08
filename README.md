@@ -154,9 +154,10 @@ ChainOpt AI follows a client-server architecture with:
 - Mobile application with native features
 - Enhanced reporting and dashboard customization
 
-## License
+## Backend
 
-This project is proprietary and confidential. Unauthorized copying, distribution, or use is strictly prohibited.
+The backend for ChainOpt AI is built using AWS and is designed to be modular and scalable. Check the repository for the backend code and configuration.
+**Backend**: [ChainOpt Backend](https://github.com/Jswears/supply-chain-optimizer-backend)
 
 ## Contact
 
