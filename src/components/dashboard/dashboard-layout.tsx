@@ -23,7 +23,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     return (
         <SidebarProvider>
             {mounted && <SidebarComponent />}
-            <SidebarInset>
+            <SidebarInset className="flex flex-col h-screen overflow-hidden">
                 <div className="flex h-16 shrink-0 items-center border-b px-4">
                     <SidebarTrigger className="cursor-pointer" />
                 </div>
